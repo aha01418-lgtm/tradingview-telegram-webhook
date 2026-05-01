@@ -28,16 +28,13 @@ const message = `
 🚨 Signal Alert
 
 ${action} — ${symbol}
+
 Price: ${price}
+Contracts: ${contracts}
 
-Suggested Contract:
-Strike: nearest strike
-Contract Cost: 200$–300$
-Expiry: nearest expiry
-
-TP1: +20%
-TP2: +40%
-SL: -20%
+TP1: +${target1_percent}%
+TP2: +${target2_percent}%
+SL: -${stop_loss_percent}%
 
 Time: ${time}
 `;
