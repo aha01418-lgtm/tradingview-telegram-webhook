@@ -26,17 +26,17 @@ app.post("/webhook", async (req, res) => {
 
 const message = `
 🚨 Signal Alert
-const {
-  symbol,
-  action,
-  price,
-  contracts,
-  stop_loss_percent,
-  target1_percent,
-  target2_percent,
-  time
-} = req.body;
 
+${action} - ${symbol}
+Price: ${price}
+
+Contracts: ${contracts}
+Stop Loss: ${stop_loss_percent}%
+TP1: ${target1_percent}%
+TP2: ${target2_percent}%
+
+Time: ${time}
+`;
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
     await axios.post(url, {
