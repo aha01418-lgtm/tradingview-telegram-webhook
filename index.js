@@ -12,7 +12,25 @@ const CHAT_ID = process.env.CHAT_ID;
 // Webhook من TradingView
 app.post("/webhook", async (req, res) => {
   try {
-    const message = JSON.stringify(req.body, null, 2);
+    cconst { symbol, action, price, time } = req.body;
+
+const message = `
+🚨 Signal Alert
+
+${action} — ${symbol}
+Price: ${price}
+
+Suggested Contract:
+Strike: nearest strike
+Contract Cost: 200$–300$
+Expiry: nearest expiry
+
+TP1: +20%
+TP2: +40%
+SL: -20%
+
+Time: ${time}
+`;
 
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
