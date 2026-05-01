@@ -33,3 +33,20 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+app.get("/test-option", async (req, res) => {
+  try {
+    const symbol = "QQQ";
+    const side = "call";
+
+    res.json({
+      success: true,
+      symbol: symbol,
+      side: side,
+      message: "Option search test ready"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
