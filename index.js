@@ -52,6 +52,34 @@ Time: ${time}
       text: message
     });
 
+    res.send("Alert sent to Telegram");
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error");
+  }
+});
+    const message = `
+🚨 Signal Alert
+
+${action} - ${symbol}
+Price: ${price}
+
+Contracts: ${contracts}
+Stop Loss: ${stop_loss_percent}%
+TP1: ${target1_percent}%
+TP2: ${target2_percent}%
+
+Time: ${time}
+`;
+
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    await axios.post(url, {
+      chat_id: CHAT_ID,
+      text: message
+    });
+
     res.send("Sent to Telegram");
 
   } catch (error) {
