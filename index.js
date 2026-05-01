@@ -5,15 +5,17 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-const TELEGRAM_BOT_TOKEN = "حط_توكن_البوت";
-const CHAT_ID = "حط_ايدي_التليجرام";
+// قراءة البيانات من Render Environment Variables
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const CHAT_ID = process.env.CHAT_ID;
 
+// Webhook من TradingView
 app.post("/webhook", async (req, res) => {
-  const message = JSON.stringify(req.body);
-
-  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
   try {
+    const message = JSON.stringify(req.body, null, 2);
+
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
     await axios.post(url, {
       chat_id: CHAT_ID,
       text: message
@@ -25,29 +27,14 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
+// صفحة اختبار
 app.get("/", (req, res) => {
   res.send("TradingView Telegram Webhook Running");
 });
 
+// تشغيل السيرفر
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
-app.get("/test-option", async (req, res) => {
-  try {
-    const symbol = "QQQ";
-    const side = "call";
-
-    res.json({
-      success: true,
-      symbol: symbol,
-      side: side,
-      message: "Option search test ready"
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
-  }
 });
