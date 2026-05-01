@@ -17,6 +17,10 @@ const CHAT_ID = process.env.CHAT_ID;
 app.post("/webhook", async (req, res) => {
   try {
 
+    const data = typeof req.body === "string"
+      ? JSON.parse(req.body)
+      : req.body;
+
     const {
       symbol,
       action,
@@ -26,7 +30,8 @@ app.post("/webhook", async (req, res) => {
       target1_percent,
       target2_percent,
       time
-    } = req.body;
+    } = data;
+  
 
 const message = `
 🚨 Signal Alert
