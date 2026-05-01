@@ -1,15 +1,14 @@
-
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 
 const app = express();
 
+// قراءة JSON + النص الخام من TradingView
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: "*/*" }));
 
-// قراءة البيانات من Render Environment Variables
+// Environment Variables من Render
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
@@ -31,9 +30,8 @@ app.post("/webhook", async (req, res) => {
       target2_percent,
       time
     } = data;
-  
 
-const message = `
+    const message = `
 🚨 Signal Alert
 
 ${action} - ${symbol}
@@ -46,6 +44,7 @@ TP2: ${target2_percent}%
 
 Time: ${time}
 `;
+
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
     await axios.post(url, {
@@ -54,7 +53,9 @@ Time: ${time}
     });
 
     res.send("Sent to Telegram");
+
   } catch (error) {
+    console.error(error);
     res.status(500).send(error.message);
   }
 });
