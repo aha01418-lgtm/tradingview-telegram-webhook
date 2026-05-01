@@ -12,7 +12,17 @@ const CHAT_ID = process.env.CHAT_ID;
 // Webhook من TradingView
 app.post("/webhook", async (req, res) => {
   try {
-    cconst { symbol, action, price, time } = req.body;
+
+    const {
+      symbol,
+      action,
+      price,
+      contracts,
+      stop_loss_percent,
+      target1_percent,
+      target2_percent,
+      time
+    } = req.body;
 
 const message = `
 🚨 Signal Alert
